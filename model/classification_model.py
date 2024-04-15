@@ -230,29 +230,34 @@ with open("D:/code/fullstack/Celeb classifier sumanth/server/artifacts/class_dic
 
     
     
+def celeb_number_to_name(n):
+   for k,v in class_dict:
+      if k==n:
+         return v   
     
     
-    
-    
 
 
-"""
-imagee='/content/images.jpg'
-cropped_imagee = get_cropped_image_if_2_eyes(imagee)
-if cropped_imagee is not None:
-    # Resize the cropped image to 32x32
-    scaled_imagee = cv2.resize(cropped_imagee, (32, 32))
-    print("Image cropped and resized successfully.")
-else:
-    print("Failed to crop image.")
 
-wl_imagee = w2d(cropped_imagee,'db1',5)
-scaled_wl_imagee = cv2.resize(wl_imagee, (32, 32))
-final_imagee= np.vstack((scaled_imagee.reshape(32*32*3,1),scaled_wl_imagee.reshape(32*32,1)))
-final_imagee=final_imagee.reshape(1,4096)
-predictions = best_clf.predict(final_imagee)
+def find_celeb(image_path):
+    imagee=cv2.imread(image_path)
+    cropped_imagee = get_cropped_image_if_2_eyes(imagee)
+    if cropped_imagee is not None:
+       # Resize the cropped image to 32x32
+       scaled_imagee = cv2.resize(cropped_imagee, (32, 32))
+       print("Image cropped and resized successfully.")
+    else:
+       print("Failed to crop image.")
+
+    wl_imagee = w2d(cropped_imagee,'db1',5)
+    scaled_wl_imagee = cv2.resize(wl_imagee, (32, 32))
+    final_imagee= np.vstack((scaled_imagee.reshape(32*32*3,1),scaled_wl_imagee.reshape(32*32,1)))
+    final_imagee=final_imagee.reshape(1,4096)
+    predictions = best_clf.predict(final_imagee)
+
+    print(celeb_number_to_name(predictions))
 
 
-print(find_celeb(predictions))
 
-"""
+
+
