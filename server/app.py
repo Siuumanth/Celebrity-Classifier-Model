@@ -21,23 +21,31 @@ def classify_image():
         
         try:
             response = util.classify_image(image,file_path=None)
-            """           
+                    
+            test=[]
             for dic in response:
                 dic2=dic['class_probability']
                 for i in dic2:
-                    if i>70:
-                        prob = dic2
-                    else:
-                        return jsonify({"error":"cannot classify image properly"})
-                        """
-            celeb=findhim(response[0]['class'])
+                   test.append(i)
+
+            max=test[0]  
+            best=int(test.index(max)/5)      
+            for i in test:
+                if i>max:
+                    best=int(test.index(i)/5)
+                    max=i
+ 
+            if response==[]:
+                 return jsonify({"error":"cannot classify image properly"})
+
+        
+        
+            c=response[best]['class']
+            celeb=findhim(c)
             link=findlink(celeb)
-            prob=response[0]['class_probability']
+            prob=response[best]['class_probability']
             return render_template('app.html',fceleb=celeb,celeblink=link,pmessi=prob[0],pmaria=prob[1],proger=prob[2],pserena=prob[3],pvirat=prob[4])
         
-                    
-
-
         except:
             return jsonify({"error":"cannot classify image "})
         
@@ -46,7 +54,7 @@ def classify_image():
 
  
         
-            return render_template('app.html',fceleb=celeb,celeblink=link,pmessi=prob[0],pmaria=prob[1],proger=prob[2],pserena=prob[3],pvirat=prob[4])
+        return render_template('app.html',fceleb=celeb,celeblink=link,pmessi=prob[0],pmaria=prob[1],proger=prob[2],pserena=prob[3],pvirat=prob[4])
 
 
 
@@ -64,7 +72,7 @@ def findlink(guy):
     last=['messi.jpeg','sharapova.jpeg','federer.jpeg','serena.jpeg','virat.jpeg']
     for i in range(5):
         if guy==cel[i]:
-            return "C:/Users/gsuma/OneDrive/Desktop/githubstud/Celebrity-Classifier-Model/server/images/ " + last[i]
+            return  last[i]  
 
 
 
@@ -72,4 +80,4 @@ def findlink(guy):
 if __name__ == "__main__":
     print("Starting Python Flask Server For Sports Celebrity Image Classification")
     util.load_saved_artifacts()
-    app.run(port=5000,debug=True)
+    app.run(debug=True)
