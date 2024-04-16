@@ -8,6 +8,7 @@ import pywt
 import sklearn
 import joblib,json
 from joblib import load
+from flask import jsonify
 
 __model=None
 
@@ -65,9 +66,9 @@ def get_cropped_image_if_2_eyes(image_path, image_base64_data):
 
     if image_path:
         img = cv2.imread(image_path)
-    else:
-        img = get_cv2_image_from_base64_string(image_base64_data)
-
+#    else:
+#        img = get_cv2_image_from_base64_string(image_base64_data)
+    img=image_base64_data
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
 
@@ -125,10 +126,11 @@ def classify_image(image_base64_data, file_path=None):
 
 
 
-
+"""
 
 fil=get_b64_test_image()
 load_saved_artifacts()
 kk=classify_image(fil, file_path=None)
 for l in kk:
     print(l,'\n')
+    """
