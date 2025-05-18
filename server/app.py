@@ -8,6 +8,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def home():
+    util.load_saved_artifacts()
     return render_template('app copy.html')
 
 @app.route('/classify', methods=['GET', 'POST'])
@@ -78,6 +79,4 @@ def findlink(guy):
 
 
 if __name__ == "__main__":
-    print("Starting Python Flask Server For Sports Celebrity Image Classification")
-    util.load_saved_artifacts()
     app.run(debug=True)
